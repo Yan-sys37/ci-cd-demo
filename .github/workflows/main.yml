@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,17 +22,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install --upgrade pip
+          pip install pandas scikit-learn numpy
 
       - name: Train Linear Model
         run: |
           python train_model.py
 
-      - name: Push Model to release branch
+      - name: Push model to release branch
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git checkout -B release
           git add linear_model.txt
-          git commit -m "Update model"
+          git commit -m "Update model" || echo "No changes to commit"
           git push -f origin release
