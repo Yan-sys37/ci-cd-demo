@@ -19,3 +19,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pandas scikit-learn numpy
+
+      - name: Run train_model.py
+        run: |
+          python train_model.py
+          ls -la  # 这一步用来确认文件是否生成
